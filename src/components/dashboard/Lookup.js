@@ -1,7 +1,5 @@
 import React from 'react';
-
-import { Box, Typography, Stack, TextField} from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
+import { Box, Typography, Stack, TextField, Button} from "@mui/material";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
@@ -12,7 +10,7 @@ function Lookup () {
     }
 
     return (
-        <Box sx={{backgroundColor: "white"}}>
+        <Box>
         <Typography variant="h4" sx={{mb: 2}}>
            Delivery Lookup 
         </Typography>
@@ -27,6 +25,7 @@ function Lookup () {
                 />
             </Stack>
         </LocalizationProvider>
+        <Button variant="outlined" sx={{mt: 2, color: "white", backgroundColor: "black",}}>Search</Button>
         </Box>
     )
 }

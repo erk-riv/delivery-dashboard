@@ -12,7 +12,7 @@ function Topbar() {
            justifyContent="space-between" 
            p={2}
            sx={{borderBottom: 1}}>
-        <img class="logo" src={logo} alt="logo"/>
+        <img class="logo" src={logo} alt="logo" draggable="false"/>
         {/* <Box display="flex" borderRadius="3px">
           <InputBase sx={{ml: 2, flex: 1, color: "#ffffff"}} placeholder="Search" />
           <IconButton type="button" sx={{p: 1, color: "#ffffff"}}>

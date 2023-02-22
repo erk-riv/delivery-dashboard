@@ -1,17 +1,41 @@
+import React, {useEffect, useState} from "react";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import { mockData } from "../data/mockData";
+//import posts.js from api folder
+import api from "../../api/posts";
 
 const Form = () => {
-    const columns = [{field: "id", headerName: "Order Number"},
-                     {field: 'deliveryDate', headerName: 'Delivery Date'},  
-                     {field: "customer", headerName: "Ship To", width: 200}, 
-                     {field: "total", headerName: "Total"}, 
-                     {field: "status", headerName: "Status"}];
-    
+    const columns = [{field: "id", headerName: "Order Number", flex: 0.5},
+                     {field: 'deliveryDate', headerName: 'Delivery Date', flex: 1},  
+                     {field: "customer", headerName: "Ship To" , flex: 1}, 
+                     {field: "total", headerName: "Total", flex: 1}, 
+                     {field: "status", headerName: "Status", flex: 1}];
+
+    const [pageSize, setPageSize] = React.useState(12);
+    const [delivery, setDelivery] = React.useState([]);
+
+    useEffect(() => {
+      const fetchPosts = async () => {
+        try {
+          const response = await api.get('/delivery');
+          setDelivery(response.data);
+        } catch (err) {
+            if (err.response) {
+            //Not in the 200 response range
+            console.log(err.response.data);
+            console.log(err.response.status);
+            console.log(err.response.headers);
+            } else {
+              console.log(`Error, ${err.message}`);
+            }
+        }}
+        fetchPosts();
+      }, [])
+
     return (
        
           <Box 
@@ -43,11 +67,13 @@ const Form = () => {
               },
           }}>
             <DataGrid
-              rows={mockData}
+              rows={delivery}
               columns={columns}
-              
-              
               disableSelectionOnClick
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              rowsPerPageOptions={[12, 24, 50, 100]}
+              pagination
               experimentalFeatures={{ newEditingApi: true }}
               autoHeight
             />
